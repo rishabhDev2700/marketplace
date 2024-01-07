@@ -1,0 +1,1 @@
+'''Views functions for buyers'''
