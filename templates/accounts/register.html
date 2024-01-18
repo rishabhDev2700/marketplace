@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "../base.html" %}
+{% load tailwind_filters %}
+{% block title %} Sign up {% endblock title %}
+{% block content %}
+<form class="mt-24 mx-8">
+    <h2 class="text-center text-2xl">Fill the form to Register</h2>
+    {% csrf_token %}
+    {{form|crispy}}
+    <label for="agreement">I accept terms and conditions</label>
+    <input id="agreement" type="checkbox" required>
+    <input class="my-4 mx-auto rounded-sm bg-green-500 px-6 py-3 text-white" type="submit" value="Register" />
 
-</body>
-</html>
+    <div class="">Already have an account? <a class="text-red-600 hover:text-red-800 underline"
+            href="{% url 'accounts:login' %}">Login</a></div>
+
+</form>
+{% endblock content %}

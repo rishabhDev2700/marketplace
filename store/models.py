@@ -1,7 +1,8 @@
 """This file contains the store models like product, category,etc. """
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse
-
+from taggit.managers import TaggableManager
 from accounts.models import User
 
 
@@ -38,9 +39,11 @@ class Product(models.Model):
     description = models.TextField()
     slug = models.SlugField(blank=False, unique=True, max_length=30)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    price = models.PositiveIntegerField()
+    listed_prices = models.PositiveIntegerField()
+    display_price = models.PositiveIntegerField()
     date_added = models.DateField(auto_now=True)
     is_available = models.BooleanField(default=True)
+    tags = TaggableManager()
     objects = models.Manager()
 
     class Meta:
@@ -74,7 +77,37 @@ class ProductImage(models.Model):
     name = models.CharField(max_length=40)
     url = models.ImageField(upload_to="media/")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     objects = models.Manager()
 
     def __str__(self):
         return str(self.name)
+
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_created = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
+
+
+class OrderProduct(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantities = models.PositiveSmallIntegerField()
+    price = models.PositiveIntegerField()
+    objects = models.Manager()
+
+
+class Rating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    rating = models.SmallIntegerField(
+        validators=[MaxValueValidator(5), MinValueValidator(0)]
+    )
+    review = models.TextField()
+    objects = models.Manager()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["user", "product"], name="unique rating")
+        ]

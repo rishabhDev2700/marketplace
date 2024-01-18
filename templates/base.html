@@ -1,10 +1,111 @@
+{% load compress %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+            {% block title %}
+            {% endblock title %}
+        </title>
+        <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    </head>
+    <body>
+        <nav class="w-full flex justify-between items-center py-2 px-4 fixed top-0 z-20 bg-white border-b-4 border-black">
+            <header class="z-10 text-2xl font-black capitalize">
+                <a class="" href="#">
+                    <img src="{% static 'imgs/brand.svg' %}" class="w-52" href="">
+                </a>
+            </header>
+            <button id="menu-button"
+                    class="z-10"
+                    type="button"
+                    aria-label="Toggle navigation">
+                <span id="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="42"
+                         height="42"
+                         enable-background="new 0 0 512 512"
+                         viewBox="0 0 512 512"
+                         id="menu">
+                        <path d="M485.883 425.832H26.781c-4.971 0-9-4.029-9-9s4.029-9 9-9h459.102c4.971 0 9 4.029 9 9S490.854 425.832 485.883 425.832zM485.883 264.742H26.781c-4.971 0-9-4.029-9-9s4.029-9 9-9h459.102c4.971 0 9 4.029 9 9S490.854 264.742 485.883 264.742zM485.883 103.653H26.781c-4.971 0-9-4.029-9-9s4.029-9 9-9h459.102c4.971 0 9 4.029 9 9S490.854 103.653 485.883 103.653z">
+                        </path>
+                    </svg>
+                </span>
+                <span id="close-icon" class="hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="42"
+                         height="42"
+                         enable-background="new 0 0 512 512"
+                         viewBox="0 0 512 512"
+                         id="multiply">
+                        <path d="M485.841,494.293c-2.304,0-4.606-0.879-6.364-2.636L20.459,32.64c-3.515-3.515-3.515-9.213,0-12.728 c3.515-3.515,9.213-3.515,12.728,0l459.018,459.017c3.515,3.515,3.515,9.214,0,12.729 C490.447,493.414,488.145,494.293,485.841,494.293z">
+                        </path>
+                        <path d="M26.823,494.293c-2.303,0-4.606-0.878-6.363-2.636c-3.515-3.514-3.516-9.213-0.001-12.728L479.477,19.829 c3.514-3.516,9.212-3.516,12.728-0.002c3.515,3.515,3.516,9.213,0.001,12.729L33.188,491.656 C31.431,493.414,29.126,494.293,26.823,494.293z">
+                        </path>
+                    </svg>
+                </span>
+            </button>
+            <div id="nav-links"
+                 class="fixed top-0 left-0 w-full h-full bg-white -translate-y-full z-0 transition-all duration-300 py-24 flex flex-col items-stretch">
+                <ul class="flex flex-col h-full">
+                    <li class="m-2 p-4 border-b-4 border-transparent hover:border-black transition-all ease-in-out duration-500">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="m-2 p-4 border-b-4 border-transparent hover:border-black transition-all ease-in-out duration-500">
+                        <a class="nav-link" href="#">Latest</a>
+                    </li>
+                    <li class="m-2 p-4 border-b-4 border-transparent hover:border-black transition-all ease-in-out duration-500">
+                        <a class="">Categories</a>
+                    </li>
+                    <li class="m-2 p-4 border-b-4 border-transparent hover:border-black transition-all ease-in-out duration-500">
+                        <a class="">Login</a>
+                    </li>
+                    <li class="m-2 p-4 border-b-4 border-transparent hover:border-black transition-all ease-in-out duration-500">
+                        <a class="">Logout</a>
+                    </li>
+                    <li class="m-2 p-4 border-b-4 border-transparent hover:border-black transition-all ease-in-out duration-500">
+                        <a class="">Register</a>
+                    </li>
+                </ul>
+                <form class="mx-auto" role="search">
+                    <input class="border-2 border-gray-300 px-4 py-3 rounded-sm"
+                           type="search"
+                           placeholder="Search"
+                           aria-label="Search">
+                    <button class="rounded-sm border-2 border-blue-600 bg-blue-500 px-4 py-3 text-white"
+                            type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        <div class="mt-14 relative h-fit">
+            {% block content %}
+            {% endblock content %}
+        </div>
+        <footer class="w-screen px-2 border-t-4 py-8 border-black z-30">
+            <!-- Footer links -->
+            <div class="text-center text-2xl font-bold">Site links</div>
+            <div class="flex justify-evenly">
+                <div class="flex flex-col">
+                    <a class="p-2 m-1" href="{% url 'store:home' %}">Home</a>
+                    <a class="p-2 m-1" href="{% url 'store:categories' %}">Categories</a>
+                    <a class="p-2 m-1" href="{% url 'store:best-sellers' %}">Best-selling</a>
+                </div>
+                <!-- Terms and condition/privacy policy-->
+                <div class="flex flex-col items-center">
+                    <a class="p-2 m-1" href="">Terms and conditions</a>
+                    <a class="p-2 m-1" href="">Privacy Policy</a>
+                </div>
+            </div>
+            <div class=" text-center font-mono pt-8 border-t-2 border-black">
+                <div class="">Copyright 2024. All Rights Reserved.</div>
+                <div class="bg-purple-800 text-white w-52 mx-auto my-2 border-2 border-black">Built by Fuzzydevs</div>
+            </div>
+        </footer>
+        <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
+                integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
+                crossorigin="anonymous"></script>
+        <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+    </body>
 </html>

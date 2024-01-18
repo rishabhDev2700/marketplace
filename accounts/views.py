@@ -3,8 +3,10 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from accounts.forms import AccountCreationForm
+
 # Create your views here.
 def register_user(request):
+
     '''Handles User registration'''
     if request.method == 'POST':
         form = AccountCreationForm(request.POST)

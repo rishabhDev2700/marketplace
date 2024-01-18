@@ -1,10 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "../base.html" %}
+{% load static %}
+{% block title %}
+  Login
+{% endblock title %}
+<div>
+  {% block content %}
+    <div class="relative">
+      <img class="w-full h-screen object-cover blur-sm -z-10"
+           src="{% static 'imgs/login-bg.jpg' %}"
+           alt="Login" />
+      <form class="absolute inset-x-2 top-1/4 p-5 bg-white flex flex-col justify-center border-4 border-black">
+        <h2 class="text-2xl text-center">Please Enter your Login credentials</h2>
+        <label class="font-medium py-1 text-gray-900" for="email">Email</label>
+        <input class="border-2 border-gray-300 p-2 my-2 rounded-sm"
+               type="email"
+               name="email"
+               placeholder="Enter your Email"
+               id="email"
+               required>
+        <label class="font-medium py-1 text-gray-900" for="password">Password</label>
+        <input class="border-2 border-gray-300 p-2 my-2 rounded-sm"
+               type="password"
+               name="password"
+               placeholder="Enter your Password"
+               id="password"
+               required>
+        <input class="my-4 mx-auto rounded-sm bg-blue-500 px-6 py-3 text-white"
+               type="submit"
+               value="Login" />
+        <div class="py-4">
+          Don't have an account? <a class="text-red-600 hover:text-red-800 underline"
+    href="{% url 'accounts:register' %}">Create new Account</a>
+        </div>
+      </form>
+    </div>
+  {% endblock content %}
+</div>
