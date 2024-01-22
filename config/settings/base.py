@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "compressor",
     "taggit",
     # "debug_toolbar",
+    "ninja",
     "crispy_forms",
     "crispy_tailwind",
     "accounts",
